@@ -1,0 +1,12 @@
+<Person>
+  <NameRu>Иван Васильевич тест</NameRu>
+  <NameEn>Ivan</NameEn>
+  <surnameRU>Russia Kursk, Kurskay obl.</surnameRU>
+  <surnameEN>Voronin</surnameEN>
+  <PlacOfBhirthRU>Россия г.Курск, Курская обл.</PlacOfBhirthRU>
+  <PlacOfBhirthEN />
+  <Authority>Курский штамповщик документов</Authority>
+  <checkedSex>М/M</checkedSex>
+  <dateOfBrith>01.03.1998 0:00:00</dateOfBrith>
+  <dateOfIssue>12.02.2023 0:00:00</dateOfIssue>
+</Person>

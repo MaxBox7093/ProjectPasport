@@ -20,9 +20,9 @@ namespace lab1
         private string dateOfBrith;
         private string dateOfIssue;
 
-        public string[] XmlRead() 
+        public string[] XmlRead(string filepath) 
         {
-            using (XmlReader reader = XmlReader.Create(@"C:\Users\maxim\OneDrive\Рабочий стол\Проектирование машинного интерфейса\lab1\User.xml"))
+            using (XmlReader reader = XmlReader.Create(filepath))
             {
                 while (reader.Read())
                 {
