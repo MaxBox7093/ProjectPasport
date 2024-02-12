@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Person>
+	<NameRu>Иван Васильевич</NameRu>
+	<NameEn>Ivan</NameEn>
+	<surnameRU>Воронин</surnameRU>
+	<surnameEN>Voronin</surnameEN>
+	<PlacOfBhirthRU>Россия г.Курск, Курская обл.</PlacOfBhirthRU>
+	<PlacOfBhirthEN>Russia Kursk, Kurskay obl.</PlacOfBhirthEN>
+	<Authority>Курский штамповщик документов</Authority>
+	<checkedSex>М/M</checkedSex>
+	<dateOfBrith>01.03.1998</dateOfBrith>
+	<dateOfIssue>12.02.2023</dateOfIssue>
+</Person>
