@@ -57,11 +57,10 @@ namespace lab1
                 MessageBox.Show("Место рождения(RU): место рождения должно быть на русской раскладке!");
             else if (!checkPlaceOfBirthEn)
                 MessageBox.Show("Место рождения(EN): место рождения должно быть на английской раскладке!");
-            else if (checkedSex != "Error")
-                MessageBox.Show(checkedSex);
+            else if (checkedSex == "Error")
+                MessageBox.Show("Укажите пол гражданина");
             else if (Authority == "")
                 MessageBox.Show("Заполните поле 'Орган, выдавший документ'");
-            MessageBox.Show(dateOfBrith);
         }
         private bool RegularRU(string value)
         {
