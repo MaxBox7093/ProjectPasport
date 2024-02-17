@@ -33,11 +33,11 @@ namespace lab1
             this.checkedSex = checkedSex;
             this.dateOfBrith = dateOfBrith;
             this.dateOfIssue = dateOfIssue;
-            Validator();
         }
 
-        private void Validator() 
+        public bool Validator() 
         {
+            bool res = false;
             bool checkNameRu = RegularRU(nameRU);
             bool checkNameEn = RegularEN(nameEN);
             bool checkSurnameRu = RegularRU(surnameRU);
@@ -49,9 +49,9 @@ namespace lab1
                 MessageBox.Show("Имя(RU): должно быть на русской раскладке, с заглавной буквы!");
             else if (!checkNameEn)
                 MessageBox.Show("Имя(EN): должно быть на английской раскладке, с заглавной буквы!");
-            else if(!checkSurnameRu)
+            else if (!checkSurnameRu)
                 MessageBox.Show("Фамилия(RU): должна быть на русской раскладке, с заглавной буквы! Так же в графе указывается отчество при наличии.");
-            else if(!checkSurnameEn)
+            else if (!checkSurnameEn)
                 MessageBox.Show("Фамилия(EN): должна быть на английской раскладке, с заглавной буквы!");
             else if (!checkPlaceOfBirthRu)
                 MessageBox.Show("Место рождения(RU): место рождения должно быть на русской раскладке!");
@@ -61,6 +61,9 @@ namespace lab1
                 MessageBox.Show("Укажите пол гражданина");
             else if (Authority == "")
                 MessageBox.Show("Заполните поле 'Орган, выдавший документ'");
+            else
+                res = true;
+            return res;
         }
         private bool RegularRU(string value)
         {

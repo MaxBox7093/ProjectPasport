@@ -1,0 +1,12 @@
+<Person>
+  <NameRu>Воронин</NameRu>
+  <NameEn>Voronin</NameEn>
+  <surnameRU>Иван Васильевич</surnameRU>
+  <surnameEN>Ivan</surnameEN>
+  <PlacOfBhirthRU>Россия г.Курск, Курская обл.</PlacOfBhirthRU>
+  <PlacOfBhirthEN>Russia Kursk, Kurskay obl.</PlacOfBhirthEN>
+  <Authority>Курский штамповщик документов</Authority>
+  <checkedSex>М/M</checkedSex>
+  <dateOfBrith>01.03.1998</dateOfBrith>
+  <dateOfIssue>12.02.2023</dateOfIssue>
+</Person>

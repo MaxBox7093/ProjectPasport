@@ -24,30 +24,6 @@ namespace lab1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string nameRU = textBox4.Text;
-            string nameEN = textBox3.Text;
-
-            string surnameRU = textBox1.Text;
-            string surnameEN = textBox2.Text;
-
-            string PlacOfBhirthRU = textBox6.Text;
-            string PlacOfBhirthEN = textBox5.Text;
-
-            string Authority = textBox7.Text;
-
-            bool man = radioButton1.Checked;
-            bool woman = radioButton2.Checked;
-
-            string dateOfBrith = dateTimePicker1.Value.ToShortDateString();
-            string dateOfIssue = dateTimePicker2.Value.ToShortDateString();
-
-            CheckSex check = new CheckSex(man, woman);
-
-            string checkedSex = check.Checked();
-
-            Human human = new Human(ref nameRU, ref nameEN, ref surnameRU, ref surnameEN, ref PlacOfBhirthRU,
-                ref PlacOfBhirthEN, ref Authority, ref checkedSex, ref dateOfBrith, ref dateOfIssue);
-
             OpenFileDialog open_dialog = new OpenFileDialog();
             open_dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
             if (open_dialog.ShowDialog() == DialogResult.OK)
@@ -108,84 +84,44 @@ namespace lab1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            string nameRU = textBox4.Text;
+            string nameEN = textBox3.Text;
 
-            XmlElement rootElement = xmlDoc.CreateElement("Person");
-            xmlDoc.AppendChild(rootElement);
+            string surnameRU = textBox1.Text;
+            string surnameEN = textBox2.Text;
 
-            XmlElement nameRuElement = xmlDoc.CreateElement("NameRu");
-            nameRuElement.InnerText = textBox4.Text;
-            rootElement.AppendChild(nameRuElement);
+            string PlacOfBhirthRU = textBox6.Text;
+            string PlacOfBhirthEN = textBox5.Text;
 
-            XmlElement nameEnElement = xmlDoc.CreateElement("NameEn");
-            nameEnElement.InnerText = textBox3.Text;
-            rootElement.AppendChild(nameEnElement);
-
-            XmlElement surnameRUElement = xmlDoc.CreateElement("surnameRU");
-            surnameRUElement.InnerText = textBox1.Text;
-            rootElement.AppendChild(surnameRUElement);
-
-            XmlElement surnameENElement = xmlDoc.CreateElement("surnameEN");
-            surnameENElement.InnerText = textBox2.Text;
-            rootElement.AppendChild(surnameENElement);
-
-            XmlElement PlacOfBhirthRU = xmlDoc.CreateElement("PlacOfBhirthRU");
-            PlacOfBhirthRU.InnerText = textBox6.Text;
-            rootElement.AppendChild(PlacOfBhirthRU);
-
-            XmlElement PlacOfBhirthEN = xmlDoc.CreateElement("PlacOfBhirthEN");
-            PlacOfBhirthEN.InnerText = textBox5.Text;
-            rootElement.AppendChild(PlacOfBhirthEN);
-
-            XmlElement Authority = xmlDoc.CreateElement("Authority");
-            Authority.InnerText = textBox7.Text;
-            rootElement.AppendChild(Authority);
+            string Authority = textBox7.Text;
 
             bool man = radioButton1.Checked;
             bool woman = radioButton2.Checked;
+
+            string dateOfBrith = dateTimePicker1.Value.ToShortDateString();
+            string dateOfIssue = dateTimePicker2.Value.ToShortDateString();
+
             CheckSex check = new CheckSex(man, woman);
-            XmlElement checkedSex = xmlDoc.CreateElement("checkedSex");
-            checkedSex.InnerText = check.Checked();
-            rootElement.AppendChild(checkedSex);
 
-            XmlElement dateOfBrith = xmlDoc.CreateElement("dateOfBrith");
-            dateOfBrith.InnerText = dateTimePicker1.Value.ToString();
-            rootElement.AppendChild(dateOfBrith);
+            string checkedSex = check.Checked();
 
-            XmlElement dateOfIssue = xmlDoc.CreateElement("dateOfIssue");
-            dateOfIssue.InnerText = dateTimePicker2.Value.ToString();
-            rootElement.AppendChild(dateOfIssue);
+            Human human = new Human(ref nameRU, ref nameEN, ref surnameRU, ref surnameEN, ref PlacOfBhirthRU,
+                ref PlacOfBhirthEN, ref Authority, ref checkedSex, ref dateOfBrith, ref dateOfIssue);
 
-            // Показываем диалоговое окно для сохранения файла
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 1;
-            saveFileDialog1.RestoreDirectory = true;
+            UsingXML xml = new UsingXML();
 
-            DialogResult result = saveFileDialog1.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                try
-                {
-                    // Сохраняем документ XML в выбранный файл
-                    xmlDoc.Save(saveFileDialog1.FileName);
-                    MessageBox.Show("Файл успешно сохранен.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка при сохранении файла: " + ex.Message);
-                }
-            }
+            if(human.Validator() == true)
+                xml.XmlWrite(ref nameRU, ref nameEN, ref surnameRU, ref surnameEN, ref PlacOfBhirthRU,
+                ref PlacOfBhirthEN, ref Authority, ref checkedSex, ref dateOfBrith, ref dateOfIssue);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var helper = new WordHelper("C:\\Users\\maxim\\OneDrive\\Рабочий стол\\Проектирование машинного интерфейса\\ProjectPasport\\Print.docx");
+            var helper = new WordHelper("C:\\Users\\maxim\\OneDrive\\Рабочий стол\\Проектирование машинного интерфейса\\lab1\\Print.docx");
             bool man = radioButton1.Checked;
             bool woman = radioButton2.Checked;
             CheckSex check = new CheckSex(man, woman);
-            string patch = @"C:\\Users\\maxim\\OneDrive\\Рабочий стол\\Проектирование машинного интерфейса\\ProjectPasport\Image\img.jpg";
+            string patch = @"C:\Users\maxim\OneDrive\Рабочий стол\Проектирование машинного интерфейса\lab1\Image\img.jpg";
             pictureBox1.Image.Save(patch, System.Drawing.Imaging.ImageFormat.Jpeg);
             var items = new Dictionary<string, string>
             {
@@ -199,7 +135,7 @@ namespace lab1
                 {"<Place>", textBox6.Text + " / " + textBox5.Text},
                 {"<Sex>", check.Checked() },
                 {"<Authority>", textBox4.Text},
-                {"<DateEnd>", textBox7.Text},
+                {"<DateEnd>", dateTimePicker2.Value.AddYears(3).ToShortDateString() }
             };
 
             helper.Process(items, patch);
