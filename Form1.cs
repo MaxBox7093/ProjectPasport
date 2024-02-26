@@ -12,61 +12,39 @@ namespace lab1
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            //Реализация выбора только одно элемента checkbox(Ж/F)
             if (radioButton1.Checked)
                 radioButton2.Checked = false;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            //Реализация выбора только одно элемента checkbox(M/M)
             if (radioButton2.Checked)
                 radioButton1.Checked = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog open_dialog = new OpenFileDialog();
-            open_dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
-            if (open_dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    Bitmap originalImage = new Bitmap(open_dialog.FileName);
-
-                    // Создаем новый Bitmap с нужным размером
-                    Bitmap resizedImage = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-
-                    // Используем Graphics для отрисовки оригинального изображения на новом Bitmap с нужным размером
-                    using (Graphics g = Graphics.FromImage(resizedImage))
-                    {
-                        g.DrawImage(originalImage, 0, 0, pictureBox1.Width, pictureBox1.Height);
-                    }
-
-                    // Освобождаем ресурсы оригинального изображения
-                    originalImage.Dispose();
-
-                    // Присваиваем новое изображение pictureBox1
-                    pictureBox1.Image = resizedImage;
-                    pictureBox1.Invalidate();
-                }
-                catch
-                {
-                    DialogResult rezult = MessageBox.Show("Невозможно открыть выбранный файл",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            //Открытие диалогового окна с последующим добалением выбранной фотографии на форму
+            FileDialog file = new FileDialog(pictureBox1);
+            file.OpenFileImg();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //XML загрузка данных в форму
+            //Открытие диалогового окна, получение ссылки
             openFileDialog1.Filter = "Text Files|*.xml";
             openFileDialog1.FileName = String.Empty;
-
             openFileDialog1.ShowDialog();
-            string filePath;
-            filePath = openFileDialog1.FileName;
+            string filePath = openFileDialog1.FileName;
 
+            //Чтение файла по ссылке, запись данных в массив
             UsingXML xml = new UsingXML();
             string[] mass = xml.XmlRead(filePath);
+
+            //Перенос данных из массива на форму
             textBox1.Text = mass[0];
             textBox2.Text = mass[1];
             textBox4.Text = mass[2];
@@ -74,16 +52,21 @@ namespace lab1
             textBox6.Text = mass[4];
             textBox5.Text = mass[5];
             textBox7.Text = mass[6];
+
             if (mass[7] == "М/M")
                 radioButton1.Checked = true;
             else if (mass[7] == "Ж/F")
                 radioButton2.Checked = true;
+
             dateTimePicker1.Value = DateTime.Parse(mass[8]);
             dateTimePicker2.Value = DateTime.Parse(mass[9]);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            //Выгрузка данных из формы в XML
+            //Чтение данных из формы
+
             string nameRU = textBox4.Text;
             string nameEN = textBox3.Text;
 
@@ -101,8 +84,8 @@ namespace lab1
             string dateOfBrith = dateTimePicker1.Value.ToShortDateString();
             string dateOfIssue = dateTimePicker2.Value.ToShortDateString();
 
+            //Проверка чекбоксов
             CheckSex check = new CheckSex(man, woman);
-
             string checkedSex = check.Checked();
 
             Human human = new Human(ref nameRU, ref nameEN, ref surnameRU, ref surnameEN, ref PlacOfBhirthRU,
@@ -110,6 +93,7 @@ namespace lab1
 
             UsingXML xml = new UsingXML();
 
+            //Валидация и запись данных в случае их соответствия
             if(human.Validator() == true)
                 xml.XmlWrite(ref nameRU, ref nameEN, ref surnameRU, ref surnameEN, ref PlacOfBhirthRU,
                 ref PlacOfBhirthEN, ref Authority, ref checkedSex, ref dateOfBrith, ref dateOfIssue);
@@ -117,12 +101,17 @@ namespace lab1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var helper = new WordHelper("C:\\Users\\maxim\\OneDrive\\Рабочий стол\\Проектирование машинного интерфейса\\lab1\\Print.docx");
+            //Проверка пола
             bool man = radioButton1.Checked;
             bool woman = radioButton2.Checked;
             CheckSex check = new CheckSex(man, woman);
-            string patch = @"C:\Users\maxim\OneDrive\Рабочий стол\Проектирование машинного интерфейса\lab1\Image\img.jpg";
-            pictureBox1.Image.Save(patch, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            //Путь к файлу Word
+            var Word = new WordHelper("C:\\Users\\maxim\\OneDrive\\Рабочий стол\\Проектирование машинного интерфейса\\ProjectPasport\\Print.docx");
+
+            //Путь к файлу Img (Куда сохранять)
+            string PatchImg = @"C:\Users\maxim\OneDrive\Рабочий стол\Проектирование машинного интерфейса\ProjectPasport\Image\img.jpg";
+            pictureBox1.Image.Save(PatchImg, System.Drawing.Imaging.ImageFormat.Jpeg);
             var items = new Dictionary<string, string>
             {
                 {"<NumberPasport>", "51№0030000"},
@@ -134,11 +123,11 @@ namespace lab1
                 {"<DateOfIssue>", dateTimePicker2.Value.ToShortDateString()},
                 {"<Place>", textBox6.Text + " / " + textBox5.Text},
                 {"<Sex>", check.Checked() },
-                {"<Authority>", textBox4.Text},
+                {"<Authority>", textBox7.Text},
                 {"<DateEnd>", dateTimePicker2.Value.AddYears(3).ToShortDateString() }
             };
 
-            helper.Process(items, patch);
+            Word.Process(items, PatchImg);
         }
     }
 }
